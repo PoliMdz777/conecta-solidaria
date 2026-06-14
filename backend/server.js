@@ -1,18 +1,23 @@
-const express    = require('express');
-const mongoose   = require('mongoose');
-const cors       = require('cors');
-const dotenv     = require('dotenv');
-const logger     = require('./utils/logger');
+const express  = require('express');
+const mongoose = require('mongoose');
+const cors     = require('cors');
+const dotenv   = require('dotenv');
+const logger   = require('./utils/logger');
 
 dotenv.config();
 
 const app = express();
 
-// Middlewares globales
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 
-// Ruta de prueba
+// Rutas
+app.use('/api/auth',          require('./routes/auth'));
+app.use('/api/necesidades',   require('./routes/necesidades'));
+app.use('/api/donaciones',    require('./routes/donaciones'));
+app.use('/api/voluntariados', require('./routes/voluntariados'));
+app.use('/api/usuarios',      require('./routes/usuarios'));
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Backend funcionando correctamente' });
 });
@@ -23,7 +28,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Error interno del servidor' });
 });
 
-// Conexión a MongoDB
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
