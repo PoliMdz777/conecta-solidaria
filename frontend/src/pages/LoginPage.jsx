@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { login as loginService } from '../services/authService';
 
 export default function LoginPage() {
   const { login } = useAuth();
