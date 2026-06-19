@@ -1,58 +1,61 @@
-import { useState } from 'react';
-import {
-  Container, Box, Typography, Paper, Tabs, Tab,
-  Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, Chip, Button, Alert
-} from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Container, Box, Typography, Paper, Tabs, Tab, Table, TableBody, TableCell,
+  TableContainer, TableHead, TableRow, Chip, Button, Alert, CircularProgress } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import BlockIcon       from '@mui/icons-material/Block';
 import DeleteIcon      from '@mui/icons-material/Delete';
 import { useAuth }     from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
-const USUARIOS_DEMO = [
-  { _id: 'u1', nombre: 'María López',   email: 'maria@mail.com',  rol: 'user',  verificado: true  },
-  { _id: 'u2', nombre: 'Carlos Ruiz',   email: 'carlos@mail.com', rol: 'user',  verificado: false },
-  { _id: 'u3', nombre: 'Ana González',  email: 'ana@mail.com',    rol: 'admin', verificado: true  },
-];
-
-const NECESIDADES_DEMO = [
-  { _id: 'n1', titulo: 'Despensa para familias', estado: 'abierta', categoria: 'Alimentos', solicitante: 'Cruz Roja' },
-  { _id: 'n2', titulo: 'Ropa de invierno',       estado: 'abierta', categoria: 'Ropa',      solicitante: 'Albergue Esperanza' },
-  { _id: 'n3', titulo: 'Voluntarios parque',     estado: 'cerrada', categoria: 'Voluntariado', solicitante: 'Vecinos Unidos' },
-];
+import { getUsuarios, verificarUsuario } from '../services/usuariosService';
+import { getNecesidades, deleteNecesidad } from '../services/necesidadesService';
 
 export default function AdminPage() {
   const { user }   = useAuth();
   const navigate   = useNavigate();
-  const [tab, setTab]     = useState(0);
-  const [mensaje, setMensaje] = useState('');
+  const [tab,      setTab]      = useState(0);
+  const [usuarios, setUsuarios] = useState([]);
+  const [necs,     setNecs]     = useState([]);
+  const [loading,  setLoading]  = useState(true);
+  const [mensaje,  setMensaje]  = useState('');
 
-  if (!user || user.rol !== 'admin') {
-    return (
-      <Box sx={{ backgroundColor: '#f1f8e9', minHeight: '100vh',
-                 display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Paper sx={{ p: 4, borderRadius: 3, textAlign: 'center' }}>
-          <Typography mb={2}>Acceso restringido a administradores.</Typography>
-          <Button variant="contained" onClick={() => navigate('/dashboard')}
-            sx={{ backgroundColor: '#2E7D32' }}>
-            Volver al inicio
-          </Button>
-        </Paper>
-      </Box>
-    );
-  }
+  useEffect(() => {
+    if (!user || user.rol !== 'admin') return;
+    Promise.all([getUsuarios(), getNecesidades({})])
+      .then(([u, n]) => { setUsuarios(u.data); setNecs(n.data); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [user]);
+
+  if (!user || user.rol !== 'admin') return (
+    <Box sx={{ backgroundColor: '#f1f8e9', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Paper sx={{ p: 4, borderRadius: 3, textAlign: 'center' }}>
+        <Typography mb={2}>Acceso restringido a administradores.</Typography>
+        <Button variant="contained" onClick={() => navigate('/dashboard')} sx={{ backgroundColor: '#2E7D32' }}>Volver</Button>
+      </Paper>
+    </Box>
+  );
 
   const accion = (texto) => { setMensaje(texto); setTimeout(() => setMensaje(''), 3000); };
+
+  const handleVerificar = async (id, nombre) => {
+    try {
+      const { data } = await verificarUsuario(id);
+      setUsuarios(usuarios.map((u) => u._id === id ? data : u));
+      accion(`Usuario ${nombre} verificado`);
+    } catch { accion('Error al verificar'); }
+  };
+
+  const handleEliminar = async (id, titulo) => {
+    try {
+      await deleteNecesidad(id);
+      setNecs(necs.filter((n) => n._id !== id));
+      accion(`Necesidad "${titulo}" eliminada`);
+    } catch { accion('Error al eliminar'); }
+  };
 
   return (
     <Box sx={{ backgroundColor: '#f1f8e9', minHeight: '100vh', py: 4 }}>
       <Container maxWidth="lg">
-
-        <Typography variant="h5" fontWeight="bold" mb={3}>
-          Panel de administración
-        </Typography>
-
+        <Typography variant="h5" fontWeight="bold" mb={3}>Panel de administración</Typography>
         {mensaje && <Alert severity="success" sx={{ mb: 2 }}>{mensaje}</Alert>}
 
         <Paper elevation={2} sx={{ borderRadius: 3 }}>
@@ -60,27 +63,24 @@ export default function AdminPage() {
             sx={{ borderBottom: 1, borderColor: 'divider',
                   '& .MuiTab-root.Mui-selected': { color: '#2E7D32' },
                   '& .MuiTabs-indicator': { backgroundColor: '#2E7D32' } }}>
-            <Tab label={`Usuarios (${USUARIOS_DEMO.length})`} />
-            <Tab label={`Necesidades (${NECESIDADES_DEMO.length})`} />
+            <Tab label={`Usuarios (${usuarios.length})`} />
+            <Tab label={`Necesidades (${necs.length})`} />
           </Tabs>
 
           <Box sx={{ p: 3 }}>
-
-            {/* Tab Usuarios */}
-            {tab === 0 && (
+            {loading ? (
+              <Box textAlign="center" py={4}><CircularProgress sx={{ color: '#2E7D32' }} /></Box>
+            ) : tab === 0 ? (
               <TableContainer>
                 <Table>
                   <TableHead>
                     <TableRow sx={{ '& th': { fontWeight: 'bold' } }}>
-                      <TableCell>Nombre</TableCell>
-                      <TableCell>Email</TableCell>
-                      <TableCell>Rol</TableCell>
-                      <TableCell>Estado</TableCell>
-                      <TableCell>Acciones</TableCell>
+                      <TableCell>Nombre</TableCell><TableCell>Email</TableCell>
+                      <TableCell>Rol</TableCell><TableCell>Estado</TableCell><TableCell>Acciones</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {USUARIOS_DEMO.map((u) => (
+                    {usuarios.map((u) => (
                       <TableRow key={u._id} hover>
                         <TableCell>{u.nombre}</TableCell>
                         <TableCell>{u.email}</TableCell>
@@ -90,63 +90,43 @@ export default function AdminPage() {
                                   color: u.rol === 'admin' ? 'white' : '#2E7D32' }} />
                         </TableCell>
                         <TableCell>
-                          <Chip
-                            label={u.verificado ? 'Verificado' : 'Pendiente'}
-                            size="small"
-                            color={u.verificado ? 'success' : 'warning'}
-                          />
+                          <Chip label={u.verificado ? 'Verificado' : 'Pendiente'} size="small"
+                            color={u.verificado ? 'success' : 'warning'} />
                         </TableCell>
                         <TableCell>
-                          <Box sx={{ display: 'flex', gap: 1 }}>
-                            {!u.verificado && (
-                              <Button size="small" startIcon={<CheckCircleIcon />}
-                                onClick={() => accion(`Usuario ${u.nombre} verificado`)}
-                                sx={{ color: '#2E7D32' }}>
-                                Verificar
-                              </Button>
-                            )}
-                            <Button size="small" startIcon={<BlockIcon />} color="warning"
-                              onClick={() => accion(`Usuario ${u.nombre} bloqueado`)}>
-                              Bloquear
+                          {!u.verificado && (
+                            <Button size="small" startIcon={<CheckCircleIcon />}
+                              onClick={() => handleVerificar(u._id, u.nombre)} sx={{ color: '#2E7D32' }}>
+                              Verificar
                             </Button>
-                          </Box>
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
-            )}
-
-            {/* Tab Necesidades */}
-            {tab === 1 && (
+            ) : (
               <TableContainer>
                 <Table>
                   <TableHead>
                     <TableRow sx={{ '& th': { fontWeight: 'bold' } }}>
-                      <TableCell>Título</TableCell>
-                      <TableCell>Categoría</TableCell>
-                      <TableCell>Solicitante</TableCell>
-                      <TableCell>Estado</TableCell>
-                      <TableCell>Acciones</TableCell>
+                      <TableCell>Título</TableCell><TableCell>Categoría</TableCell>
+                      <TableCell>Solicitante</TableCell><TableCell>Estado</TableCell><TableCell>Acciones</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {NECESIDADES_DEMO.map((n) => (
+                    {necs.map((n) => (
                       <TableRow key={n._id} hover>
                         <TableCell>{n.titulo}</TableCell>
                         <TableCell>{n.categoria}</TableCell>
-                        <TableCell>{n.solicitante}</TableCell>
+                        <TableCell>{n.solicitante?.nombre || '-'}</TableCell>
                         <TableCell>
-                          <Chip
-                            label={n.estado}
-                            size="small"
-                            color={n.estado === 'abierta' ? 'success' : 'default'}
-                          />
+                          <Chip label={n.estado} size="small" color={n.estado === 'abierta' ? 'success' : 'default'} />
                         </TableCell>
                         <TableCell>
                           <Button size="small" startIcon={<DeleteIcon />} color="error"
-                            onClick={() => accion(`Necesidad "${n.titulo}" eliminada`)}>
+                            onClick={() => handleEliminar(n._id, n.titulo)}>
                             Eliminar
                           </Button>
                         </TableCell>
@@ -156,7 +136,6 @@ export default function AdminPage() {
                 </Table>
               </TableContainer>
             )}
-
           </Box>
         </Paper>
       </Container>
