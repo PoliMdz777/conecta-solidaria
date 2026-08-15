@@ -41,8 +41,14 @@ export default function Navbar() {
                   <Button color="inherit" component={Link} to="/reportes">
                     Reportes
                   </Button>
+                  <Button color="inherit" component={Link} to="/organizaciones">
+                    Organizaciones
+                  </Button>
                 </>
               )}
+              <Button color="inherit" component={Link} to="/notificaciones">
+                Notificaciones
+              </Button>
               <Button color="inherit" component={Link} to="/perfil">
                 Mi Perfil
               </Button>

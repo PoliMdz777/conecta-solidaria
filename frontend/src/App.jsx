@@ -11,6 +11,8 @@ import CrearNecesidadPage from './pages/CrearNecesidadPage';
 import PerfilPage        from './pages/PerfilPage';
 import AdminPage         from './pages/AdminPage';
 import ReportesPage from './pages/ReportesPage';
+import OrganizacionesPage from './pages/OrganizacionesPage';
+import NotificacionesPage from './pages/NotificacionesPage';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
           <Route path="/perfil"         element={<PerfilPage />} />
           <Route path="/admin"          element={<AdminPage />} />
           <Route path="/reportes"       element={<ReportesPage />} />
+          <Route path="/organizaciones" element={<OrganizacionesPage />} />
+          <Route path="/notificaciones" element={<NotificacionesPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
