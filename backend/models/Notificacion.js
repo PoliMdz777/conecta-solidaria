@@ -5,6 +5,7 @@ const notificacionSchema = new mongoose.Schema({
   mensaje:  { type: String, required: true },
   tipo:     { type: String, enum: ['donacion','voluntariado','sistema'], default: 'sistema' },
   leida:    { type: Boolean, default: false },
+  activo: { type: Boolean, default: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Notificacion', notificacionSchema);

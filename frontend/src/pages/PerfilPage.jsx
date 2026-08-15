@@ -9,20 +9,30 @@ import { getDonaciones }    from '../services/donacionesService';
 import { getVoluntariados } from '../services/voluntariadosService';
 
 export default function PerfilPage() {
-  const { user, logout } = useAuth();
+  const { user, logout, cargando } = useAuth();
   const navigate         = useNavigate();
   const [donaciones,    setDonaciones]    = useState([]);
   const [voluntariados, setVoluntariados] = useState([]);
   const [loading,       setLoading]       = useState(true);
 
   useEffect(() => {
+    if (cargando) return;
     if (!user) return;
     Promise.all([getDonaciones(), getVoluntariados()])
       .then(([d, v]) => { setDonaciones(d.data); setVoluntariados(v.data); })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [user]);
+  }, [cargando, user]);
 
+   // Mientras AuthContext sigue inicializando, muestra un loader, NO el mensaje de "debes iniciar sesión"
+  if (cargando) {
+    return (
+      <Box sx={{ backgroundColor: '#f1f8e9', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <CircularProgress sx={{ color: '#2E7D32' }} />
+      </Box>
+    );
+  }
+  
   if (!user) return (
     <Box sx={{ backgroundColor: '#f1f8e9', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Paper sx={{ p: 4, borderRadius: 3, textAlign: 'center' }}>

@@ -17,6 +17,10 @@ app.use('/api/necesidades',   require('./routes/necesidades'));
 app.use('/api/donaciones',    require('./routes/donaciones'));
 app.use('/api/voluntariados', require('./routes/voluntariados'));
 app.use('/api/usuarios',      require('./routes/usuarios'));
+app.use('/api/reportes', require('./routes/reportes'));
+
+app.use('/api/organizaciones', require('./routes/organizaciones'));
+app.use('/api/notificaciones', require('./routes/notificaciones'));
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Backend funcionando correctamente' });

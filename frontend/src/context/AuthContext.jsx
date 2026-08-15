@@ -5,6 +5,7 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user,  setUser]  = useState(null);
   const [token, setToken] = useState(null);
+  const [cargando, setCargando] = useState(true);
 
   // Recuperar sesión al recargar la página
   useEffect(() => {
@@ -14,6 +15,7 @@ export function AuthProvider({ children }) {
       setToken(savedToken);
       setUser(JSON.parse(savedUser));
     }
+    setCargando(false); // <- avisa que ya terminó de revisar localStorage
   }, []);
 
   const login = (userData, jwt) => {
@@ -31,7 +33,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, cargando }}>
       {children}
     </AuthContext.Provider>
   );

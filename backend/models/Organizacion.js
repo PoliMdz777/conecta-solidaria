@@ -6,6 +6,7 @@ const organizacionSchema = new mongoose.Schema({
   telefono:     { type: String, required: true },
   responsable:  { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   verificada:   { type: Boolean, default: false },
+  activo: { type: Boolean, default: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Organizacion', organizacionSchema);

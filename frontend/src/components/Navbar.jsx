@@ -34,9 +34,14 @@ export default function Navbar() {
           {user ? (
             <>
               {user.rol === 'admin' && (
-                <Button color="inherit" component={Link} to="/admin">
-                  Admin
-                </Button>
+                <>
+                  <Button color="inherit" component={Link} to="/admin">
+                    Admin
+                  </Button>
+                  <Button color="inherit" component={Link} to="/reportes">
+                    Reportes
+                  </Button>
+                </>
               )}
               <Button color="inherit" component={Link} to="/perfil">
                 Mi Perfil

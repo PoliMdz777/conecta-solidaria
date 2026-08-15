@@ -69,7 +69,7 @@ export default function AdminPage() {
 
           <Box sx={{ p: 3 }}>
             {loading ? (
-              <Box textAlign="center" py={4}><CircularProgress sx={{ color: '#2E7D32' }} /></Box>
+             <Box sx={{ textAlign: 'center', py: 4 }}><CircularProgress sx={{ color: '#2E7D32' }} /></Box>
             ) : tab === 0 ? (
               <TableContainer>
                 <Table>

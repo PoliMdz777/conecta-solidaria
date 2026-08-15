@@ -10,6 +10,7 @@ import DetallePage       from './pages/DetallePage';
 import CrearNecesidadPage from './pages/CrearNecesidadPage';
 import PerfilPage        from './pages/PerfilPage';
 import AdminPage         from './pages/AdminPage';
+import ReportesPage from './pages/ReportesPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/crear"          element={<CrearNecesidadPage />} />
           <Route path="/perfil"         element={<PerfilPage />} />
           <Route path="/admin"          element={<AdminPage />} />
+          <Route path="/reportes"       element={<ReportesPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

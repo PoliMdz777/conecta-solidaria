@@ -116,12 +116,14 @@ export default function DetallePage() {
               {tipo === 'articulo' && <>
                 <TextField fullWidth label="¿Qué artículo donas?" value={descripcion}
                   onChange={(e) => setDescripcion(e.target.value)} sx={{ mb: 2 }} required />
-                <TextField fullWidth label="Cantidad" type="number" value={cantidad}
-                  onChange={(e) => setCantidad(e.target.value)} sx={{ mb: 2 }} required inputProps={{ min: 1 }} />
+                  <TextField fullWidth label="Cantidad" type="number" value={cantidad}
+                    onChange={(e) => setCantidad(e.target.value)} sx={{ mb: 2 }} required
+                    slotProps={{ htmlInput: { min: 1 } }} />
               </>}
               {tipo === 'voluntariado' && (
                 <TextField fullWidth label="Horas que puedes ofrecer" type="number" value={horas}
-                  onChange={(e) => setHoras(e.target.value)} sx={{ mb: 2 }} required inputProps={{ min: 1 }} />
+                    onChange={(e) => setHoras(e.target.value)} sx={{ mb: 2 }} required
+                    slotProps={{ htmlInput: { min: 1 } }} />
               )}
               <Button type="submit" variant="contained" size="large" fullWidth disabled={enviando}
                 sx={{ backgroundColor: '#2E7D32', '&:hover': { backgroundColor: '#1b5e20' } }}>

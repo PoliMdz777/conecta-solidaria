@@ -43,13 +43,13 @@ export default function LandingPage() {
         <Typography variant="h4" textAlign="center" fontWeight="bold" mb={4}>
           ¿Cómo funciona?
         </Typography>
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
           {[
             { num: '1', titulo: 'Regístrate', desc: 'Crea tu cuenta gratis en minutos.' },
             { num: '2', titulo: 'Explora', desc: 'Encuentra necesidades cerca de ti por categoría.' },
             { num: '3', titulo: 'Ayuda', desc: 'Dona artículos o regístrate como voluntario.' },
           ].map((item) => (
-            <Grid item xs={12} sm={4} key={item.num} textAlign="center">
+           <Grid size={{ xs: 12, sm: 4 }} key={item.num} sx={{ textAlign: 'center' }}>
               <Box
                 sx={{
                   width: 60, height: 60, borderRadius: '50%',

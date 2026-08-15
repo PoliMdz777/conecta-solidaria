@@ -61,7 +61,7 @@ export default function DashboardPage() {
         <Box sx={{ display: 'flex', gap: 2, mb: 4, flexWrap: 'wrap' }}>
           <TextField placeholder="Buscar necesidades..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)}
             sx={{ flexGrow: 1, minWidth: 200, backgroundColor: 'white', borderRadius: 1 }}
-            InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon color="action" /></InputAdornment> }} />
+            slotProps={{ input: { startAdornment: <InputAdornment position="start"><SearchIcon color="action" /></InputAdornment> } }} />
           <TextField select label="Categoría" value={categoria} onChange={(e) => { setCategoria(e.target.value); setLoading(true); }}
             sx={{ minWidth: 150, backgroundColor: 'white' }}>
             {CATEGORIAS.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
@@ -77,7 +77,7 @@ export default function DashboardPage() {
         ) : filtradas.length > 0 ? (
           <Grid container spacing={3}>
             {filtradas.map((n) => (
-              <Grid item xs={12} sm={6} md={4} key={n._id}>
+             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={n._id}>
                 <NecesidadCard necesidad={n} />
               </Grid>
             ))}

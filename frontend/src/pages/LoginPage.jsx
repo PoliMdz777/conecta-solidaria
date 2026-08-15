@@ -29,13 +29,15 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      // Por ahora simulamos login — se conectará al backend después
-      const fakeUser  = { id: '1', nombre: 'Usuario', email: form.email, rol: 'user' };
-      const fakeToken = 'fake-jwt-token';
-      login(fakeUser, fakeToken);
+      const res = await loginService({
+        email: form.email,
+        password: form.password,
+      });
+      // El backend responde { token, usuario } según tu diseño técnico
+      login(res.data.usuario, res.data.token);
       navigate('/dashboard');
-    } catch {
-      setError('Credenciales incorrectas. Intenta de nuevo.');
+    } catch (err) {
+      setError(err.response?.data?.error || 'Credenciales incorrectas. Intenta de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -53,6 +55,7 @@ export default function LoginPage() {
           <Typography color="text.secondary" textAlign="center" mb={3}>
             Bienvenido de nuevo a ConectaSolidaria
           </Typography>
+          <Typography align="center" variant="body2"></Typography>
 
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
