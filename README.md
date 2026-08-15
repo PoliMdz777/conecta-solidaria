@@ -45,77 +45,7 @@ Todos los endpoints protegidos requieren el header `Authorization: Bearer <token
 | Notificaciones | CRUD completo (soft-delete) en `/api/notificaciones` |
 | Reportes | 4 consultas agregadas en `/api/reportes/*` (solo admin) |
 
-## Instrucciones de ejecución
 
-### Requisitos previos
-
-- Node.js 18 o superior
-- npm 9 o superior
-- Cuenta en MongoDB Atlas (tier gratuito M0 es suficiente)
-
-### 1. Clonar el repositorio
-
-```bash
-git clone https://github.com/PoliMdz777/conecta-solidaria.git
-cd conecta-solidaria
-```
-
-### 2. Configurar el backend
-
-```bash
-cd backend
-npm install
-```
-
-Crear un archivo `.env` dentro de `backend/` con:
-
-PORT=4000
-MONGODB_URI=<tu cadena de conexión de MongoDB Atlas>
-JWT_SECRET=<tu clave secreta>
-NODE_ENV=development
-
-
-Iniciar el servidor:
-
-```bash
-npm start
-```
-
-Deberías ver en la terminal:
-
-INFO: Conectado a MongoDB Atlas
-INFO: Servidor corriendo en puerto 4000
-
-
-### 3. Poblar la base de datos (opcional, en otra terminal)
-
-```bash
-cd backend
-node seed.js
-```
-
-Esto crea usuarios de prueba, incluyendo un administrador.
-
-### 4. Configurar el frontend
-
-En una terminal nueva:
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-La aplicación se abre automáticamente en `http://localhost:3000`.
-
-### 5. Verificar que el backend responde
-
-Con el backend corriendo, abre en el navegador:
-
-http://localhost:4000/api/health
-
-
-Deberías ver: `{ "status": "OK", "message": "Backend funcionando correctamente" }`
 
 ## Tecnologías
 
