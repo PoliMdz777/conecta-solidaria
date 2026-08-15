@@ -4,7 +4,7 @@ Plataforma web que conecta personas que necesitan ayuda con voluntarios y donant
 Stack: MongoDB, Express, React, Node.js (MERN)
 
 ## Integrantes
-- Carlo Emilio Polina Mendez
+- PoliMdz777
 
 ## Descripción
 ConectaSolidaria permite publicar necesidades de ayuda (alimentos, ropa, medicinas, voluntariado),
