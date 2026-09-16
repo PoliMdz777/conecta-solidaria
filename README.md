@@ -5,6 +5,9 @@ Stack: MongoDB, Express, React, Node.js (MERN)
 
 ## Integrantes
 - PoliMdz777
+- Franco Gabriel Dávila Reyes, 
+-Diana Patricia Del Ángel Del Ángel
+- Natalie Yadira Acosta Argueta
 
 ## Descripción
 ConectaSolidaria permite publicar necesidades de ayuda (alimentos, ropa, medicinas, voluntariado),
@@ -32,7 +35,7 @@ conecta-solidaria/
 
 ## Endpoints principales
 
-Todos los endpoints protegidos requieren el header `Authorization: Bearer <token>`.
+Todos los endpoints protegidos requieren el header 'Authorization: Bearer <token>'.
 
 | Recurso | Rutas |
 |---|---|
