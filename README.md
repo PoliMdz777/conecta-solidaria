@@ -6,7 +6,7 @@ Stack: MongoDB, Express, React, Node.js (MERN)
 ## Integrantes
 - PoliMdz777
 - Franco Gabriel Dávila Reyes, 
--Diana Patricia Del Ángel Del Ángel
+- Diana Patricia Del Ángel Del Ángel
 - Natalie Yadira Acosta Argueta
 
 ## Descripción
