@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import {
   Container, Box, TextField, Button, Typography,
-  Paper, Alert, CircularProgress
+  Paper, Alert, CircularProgress, InputAdornment, IconButton
 } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { login as loginService } from '../services/authService';
@@ -14,6 +15,8 @@ export default function LoginPage() {
   const [form, setForm]       = useState({ email: '', password: '' });
   const [error, setError]     = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const handleTogglePassword = () => setShowPassword((prev) => !prev);
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -66,9 +69,23 @@ export default function LoginPage() {
               sx={{ mb: 2 }} required
             />
             <TextField
-              fullWidth label="Contraseña" name="password" type="password"
+              fullWidth label="Contraseña" name="password" 
+              type={showPassword ? 'text' : 'password'}
               value={form.password} onChange={handleChange}
               sx={{ mb: 3 }} required
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={handleTogglePassword}
+                      edge="end"
+                      aria-label="alternar visibilidad de contraseña"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               type="submit" fullWidth variant="contained" size="large"
