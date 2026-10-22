@@ -40,6 +40,14 @@ export default function RegisterPage() {
     <Box sx={{ backgroundColor: '#f1f8e9', minHeight: '100vh', display: 'flex', alignItems: 'center', py: 4 }}>
       <Container maxWidth="sm">
         <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+          <Box
+            component="img"
+            src="/logo.png"
+            alt="Logo ConectaSolidaria"
+            sx={{ width: 52, height: 52, borderRadius: '50%' }}
+          />
+        </Box>         
           <Typography variant="h5" fontWeight="bold" textAlign="center" mb={1}>Crear cuenta</Typography>
           <Typography color="text.secondary" textAlign="center" mb={3}>Únete a ConectaSolidaria</Typography>
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
