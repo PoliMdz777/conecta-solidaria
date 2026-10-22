@@ -17,15 +17,40 @@ export default function Navbar() {
     <AppBar position="static" sx={{ backgroundColor: VERDE }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-        <Typography
-          variant="h6"
+<Box
           component={Link}
           to="/"
-          sx={{ color: 'white', textDecoration: 'none', fontWeight: 'bold' }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.5,
+            textDecoration: 'none',
+            color: 'white'
+          }}
         >
-          ConectaSolidaria
-        </Typography>
-
+          <Box
+            component="img"
+            src="/logo.png"
+            alt="Logo ConectaSolidaria"
+            sx={{
+              width: 38,
+              height: 38,
+              borderRadius: '50%',
+              display: 'block'
+            }}
+          />
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 'bold',
+              color: 'inherit',
+              lineHeight: 1
+            }}
+          >
+            ConectaSolidaria
+          </Typography>
+        </Box>
+        
         <Box sx={{ display: 'flex', gap: 1 }}>
           <Button color="inherit" component={Link} to="/dashboard">
             Explorar
