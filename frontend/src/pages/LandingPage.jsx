@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Container, Grid } from '@mui/material';
+import { Box, Typography, Button, Container, Grid, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 export default function LandingPage() {
@@ -40,7 +40,7 @@ export default function LandingPage() {
 
       {/* Cómo funciona */}
       <Container sx={{ py: 8 }}>
-        <Typography variant="h4" textAlign="center" fontWeight="bold" mb={4}>
+        <Typography variant="h4" textAlign="center" fontWeight="bold" mb={5} color="#1b5e20">
           ¿Cómo funciona?
         </Typography>
         <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
@@ -49,19 +49,50 @@ export default function LandingPage() {
             { num: '2', titulo: 'Explora', desc: 'Encuentra necesidades cerca de ti por categoría.' },
             { num: '3', titulo: 'Ayuda', desc: 'Dona artículos o regístrate como voluntario.' },
           ].map((item) => (
-           <Grid size={{ xs: 12, sm: 4 }} key={item.num} sx={{ textAlign: 'center' }}>
-              <Box
+            <Grid item xs={12} sm={4} key={item.num}>
+              <Paper
+                elevation={2}
                 sx={{
-                  width: 60, height: 60, borderRadius: '50%',
-                  backgroundColor: '#2E7D32', color: 'white',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 24, fontWeight: 'bold', margin: '0 auto 16px',
+                  p: 4,
+                  height: '100%',
+                  borderRadius: 3,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  backgroundColor: '#ffffff',
+                  boxSizing: 'border-box',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: 4,
+                  },
                 }}
               >
-                {item.num}
-              </Box>
-              <Typography variant="h6" fontWeight="bold">{item.titulo}</Typography>
-              <Typography color="text.secondary">{item.desc}</Typography>
+                <Box
+                  sx={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: '50%',
+                    backgroundColor: '#2E7D32',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 22,
+                    fontWeight: 'bold',
+                    mb: 2,
+                  }}
+                >
+                  {item.num}
+                </Box>
+                <Typography variant="h6" fontWeight="bold" gutterBottom color="#2e7d32">
+                  {item.titulo}
+                </Typography>
+                <Typography color="text.secondary" variant="body2">
+                  {item.desc}
+                </Typography>
+              </Paper>
             </Grid>
           ))}
         </Grid>
