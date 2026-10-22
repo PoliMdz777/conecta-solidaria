@@ -7,21 +7,54 @@ export default function LandingPage() {
   return (
     <Box sx={{ backgroundColor: '#f1f8e9', minHeight: '100vh' }}>
 
-      {/* Hero */}
-      <Box sx={{ backgroundColor: '#2E7D32', color: 'white', py: 10, textAlign: 'center' }}>
-        <Container>
-          <Typography variant="h3" sx={{ fontWeight: 'bold', mb: 2 }}>
+{/* Hero */}
+      <Box
+        sx={{
+          color: 'white',
+          py: 12,
+          textAlign: 'center',
+          position: 'relative',
+          backgroundImage: `linear-gradient(rgba(27, 94, 32, 0.85), rgba(18, 55, 21, 0.90)), url(/hero-bg.jpg)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        <Container maxWidth="md">
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 800,
+              mb: 2,
+              textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+              fontSize: { xs: '2rem', sm: '2.8rem', md: '3.2rem' }
+            }}
+          >
             Conecta tu ayuda con quien la necesita
           </Typography>
-          <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
+          <Typography
+            variant="h6"
+            sx={{
+              mb: 4,
+              opacity: 0.95,
+              textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+              fontSize: { xs: '1rem', sm: '1.25rem' }
+            }}
+          >
             Publica necesidades, dona artículos o hazte voluntario.<br />
             Juntos hacemos más.
           </Typography>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button
               variant="contained"
               size="large"
-              sx={{ backgroundColor: 'white', color: '#2E7D32', fontWeight: 'bold' }}
+              sx={{
+                backgroundColor: 'white',
+                color: '#1b5e20',
+                fontWeight: 'bold',
+                px: 3,
+                '&:hover': { backgroundColor: '#f1f8e9' }
+              }}
               onClick={() => navigate('/dashboard')}
             >
               Explorar necesidades
@@ -29,7 +62,17 @@ export default function LandingPage() {
             <Button
               variant="outlined"
               size="large"
-              sx={{ color: 'white', borderColor: 'white' }}
+              sx={{
+                color: 'white',
+                borderColor: 'white',
+                borderWidth: 2,
+                fontWeight: 'bold',
+                px: 3,
+                '&:hover': {
+                  borderColor: 'white',
+                  backgroundColor: 'rgba(255,255,255,0.1)'
+                }
+              }}
               onClick={() => navigate('/register')}
             >
               Unirme ahora
